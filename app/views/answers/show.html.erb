@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @answer.user.name %>
+</p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @answer.question.text %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @answer.answer %>
+</p>
+
+<%= link_to 'Ok', root_path %>

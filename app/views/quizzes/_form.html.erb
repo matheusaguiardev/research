@@ -1,0 +1,22 @@
+<%= form_with(url: quizzes_path, local: true) do |form| %>
+
+
+<%= form.fields_for :answer_quiz do |answer_fields| %>
+  <%= answer_fields.hidden_field :user_id , :value => current_user.id%> 
+  <%= answer_fields.hidden_field :question_id , :value => id_question_without_response(answers, questions) %>
+  
+  <%= question_without_response(answers, questions) %>
+  <div style=<%=visibility_style(answers)%> >
+      <%= select_tag(:answer, options_for_select([['1', 1], ['2', 2], ['3',3], ['4',4], ['5',5]]), {:class=> "collection", :style => "display: inline"}) %>
+  </div>
+    
+<%end%>
+  
+<button style=<%=visibility_style(answers)%> class="btn waves-effect waves-light">Proximo
+    <i class="material-icons right">send</i>
+    <%form.submit%>
+</button>
+
+<br>
+
+<% end %>
