@@ -89,7 +89,6 @@ class QuizzesController < ApplicationController
 
       def result_final_quizzes
         replies = everybody_replied_quiz
-        byebug
         if replies.select{|k,v| v == false}.empty?
           send_email
         else
