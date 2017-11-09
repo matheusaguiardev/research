@@ -89,11 +89,11 @@ class QuizzesController < ApplicationController
 
       def result_final_quizzes
         replies = everybody_replied_quiz
-      
-        if replies.select{|k,v| v == "false"}.empty?
+        byebug
+        if replies.select{|k,v| v == false}.empty?
           send_email
         else
-          replies.select{|k,v| v == "false"}.each do |k,v|
+          replies.select{|k,v| v == false}.each do |k,v|
             puts("Falta responder a pesquisa o funcionario: #{User.find(k)}")
           end
         end
@@ -119,10 +119,12 @@ class QuizzesController < ApplicationController
       def calc_average
         answers_quiz = Answer.all
         total = 0
-        answers_quiz.each do |a|
-          total = total + Integer(a.answer)
-        end
-        (total/answers_quiz.size)
+          answers_quiz.each do |a|
+            if !a.answer.nil?
+              total = total + Integer(a.answer)
+            end
+          end
+          (total/answers_quiz.size)
       end
   end
   
