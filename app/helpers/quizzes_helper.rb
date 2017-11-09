@@ -13,7 +13,7 @@ module QuizzesHelper
         if answers_uncompleted.size > 0
             answers_uncompleted.first.question.text
         else
-            "Não existem novas perguntas cadastrada para seu usuário."
+            "Não existem novas perguntas cadastrada para seu usuário. Aguarde até que todos tenham respondido. Enviaremos para o email: #{current_user.email}"
         end
     end
 
