@@ -1,5 +1,6 @@
 class QuizzesController < ApplicationController
     before_action :authenticate_user!
+    after_action :result_final_quizzes, only:[:create]
     before_action :set_question, only: [:show, :edit, :update, :destroy]
     require 'mail'
     
@@ -84,6 +85,44 @@ class QuizzesController < ApplicationController
 
       def answer_params
         params.require(:answer)
+      end
+
+      def result_final_quizzes
+        replies = everybody_replied_quiz
+      
+        if replies.select{|k,v| v == "false"}.empty?
+          send_email
+        else
+          replies.select{|k,v| v == "false"}.each do |k,v|
+            puts("Falta responder a pesquisa o funcionario: #{User.find(k)}")
+          end
+        end
+      end
+
+      def everybody_replied_quiz
+        user_replied_quiz = {}
+        User.all.each do |user|
+          Answer.all.where(user_id: user.id).each do |answer_user|
+            user_replied_quiz[user.id] = (answer_user.answer != nil)
+          end
+        end
+        user_replied_quiz
+      end
+
+      def send_email
+        average = calc_average
+        User.all.each do |user|
+          QuizMailer.body_mailer(User.find(user.id), average).deliver_now
+        end
+      end
+
+      def calc_average
+        answers_quiz = Answer.all
+        total = 0
+        answers_quiz.each do |a|
+          total = total + Integer(a.answer)
+        end
+        (total/answers_quiz.size)
       end
   end
   

@@ -33,17 +33,10 @@ module QuizzesHelper
         answer.where(user_id: current_user.id)
     end
 
-    def send_result_quiz_to(users)
-        
-        QuizMailer.body_mailer(current_user)
-    end
-
 private 
 
     def question_without_response_by_user(answers)
         answers_user(answers).select{|a| a.answer == nil or a.answer == ''}
     end
-
-
 
 end

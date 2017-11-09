@@ -1,6 +1,5 @@
 <h1>Seja bem vindo, <%= current_user.name%></h1>
 
 <%= render 'form',questions: @questions, answers: answers_user(@answers)%><br>
-    
-<%send_result_quiz_to([current_user])%>
+
 <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "waves-effect waves-light btn") %>

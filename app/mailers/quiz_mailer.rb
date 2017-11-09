@@ -1,9 +1,9 @@
 class QuizMailer < ApplicationMailer
     default from: "quiz@aguiar.com"
 
-    def body_mailer(user)
+    def body_mailer(user, result)
         @user = user
-        puts("Email enviado para: #{@user.email}")
+        @result = result
         mail(to: @user.email, subject: 'Resultado da pesquisa')
     end
 
